@@ -68,7 +68,7 @@ public class RetailStore
             {
             	
             }
-	    }
+	}
 	    
 
         public void get_user_level()
