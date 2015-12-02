@@ -23,42 +23,53 @@ public class RetailStore
                 }
 
                /* Scanner input = new Scanner( System.in );
-
                 int number1;
                 int number2;
                 int sum;
-
                 System.out.print( "Enter First integer: " );
                 number1 = input.nextInt(); //Defines number1
-                System.out.print( "Enter Second interger: " );
+                System.out.print( "Enter Second integer: " );
                 number2 = input.nextInt(); //Defines number2
-
                 sum = number1 + number2;
                 System.out.printf( "Sum equals %d\n", sum); */
 	}
 
 
-        public void defaultMenu(){
+        public void defaultMenu()
+        {
                 
         }
 
-        public static void menuContent()
+        public static void menuContent()	// The first menu to appear on the app.
         {
 
-             if ( menuOption == "" ){
+            if ( menuOption == "" )
+            {
                 System.out.println( "***********************************" );
                 System.out.println( "* ( 1 ) Login                     *" );
                 System.out.println( "* ( 2 ) Sign Up                   *" );
                 System.out.println( "* ( 3 ) Search                    *" );
                 System.out.println( "* ( 4 ) Exit                      *" );
                 System.out.println( "***********************************" );
-            }else{
+            }
+            else if( menuOption =="2" )
+            {
+            	
+            }
+            else if( menuOption =="3" )
+            {
+            	
+            }
+            else if( menuOption =="4" )
+            {
 
             }
-
-
-
-        }
+            else
+            {
+            	
+            }
+	    }
+	    
 
         public void get_user_level()
         {
