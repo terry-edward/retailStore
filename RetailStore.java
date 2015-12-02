@@ -1,5 +1,12 @@
 import java.util.Scanner;
 import java.sql.*;
+/*
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+*/
 
 public class RetailStore
 {
@@ -105,44 +112,33 @@ public class RetailStore
         }
 
         public void create() throws SQLException{
-               Connection sqlcon  = null;
-           Statement sqlStatement  = null;
-     ResultSet myResultSet  = null;
-
-     try {
-       DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-
-       // Connect to the database
-       sqlcon= DriverManager.getConnection ("jdbc:my:thin:hr/hr@oracle.cise.ufl.edu:1521:orcl", "username", "password");
-
-       // Create a Statement
-       sqlStatement = sqlcon.createStatement ();
-
-       // call sqlStatement.executeQuery ()
-       String q = "select Student.ID, name, GPA from Student, Apply where UnivName = \'UF\' and Student.ID = Apply.ID";
-
-       System.out.println(q);      
-       myResultSet = sqlStatement.executeQuery(q);
-
-
-       // Move to next row and & its contents to the html output
-       while(myResultSet.next())
-       {
-         String id = myResultSet.getObject(1).toString();
-         String name = myResultSet.getObject(2).toString();
-         String GPA = myResultSet.getObject(3).toString();
-         System.out.println("  " + id + "    " + name + "     " + GPA);
-       }
-
-       sqlStatement.close();
-
-       sqlcon.close();
-     }
-
-     catch (SQLException ex)
-     {
-       System.out.println("SQLException:" + ex.getMessage() + "<BR>");
-     }
+                Connection conn = null;
+                Statement stmt = null;
+                ResultSet rs = null;
+                try {
+                        //                      new com.mysql.jdbc.Driver();
+                        Class.forName("com.mysql.jdbc.Driver").newInstance();
+                        // conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/testdatabase?user=testuser&password=testpassword");
+                        String connectionUrl = "jdbc:mysql://localhost:3306/testdatabase";
+                        String connectionUser = "testuser";
+                        String connectionPassword = "testpassword";
+                        conn = DriverManager.getConnection(connectionUrl, connectionUser, connectionPassword);
+                        stmt = conn.createStatement();
+                        rs = stmt.executeQuery("SELECT * FROM employees");
+                        while (rs.next()) {
+                                String id = rs.getString("id");
+                                String firstName = rs.getString("first_name");
+                                String lastName = rs.getString("last_name");
+                                System.out.println("ID: " + id + ", First Name: " + firstName
+                                                + ", Last Name: " + lastName);
+                        }
+                } catch (Exception e) {
+                        e.printStackTrace();
+                } finally {
+                        try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+                        try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+                        try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+                }
 
 
         }
