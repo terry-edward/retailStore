@@ -99,9 +99,7 @@ public class RetailStore
                 PreparedStatement password_Query = null;
                 ResultSet rs = null;
                 try {
-                        //                      new com.mysql.jdbc.Driver();
                         Class.forName("com.mysql.jdbc.Driver").newInstance();
-                       
                         String connectionUrl = "jdbc:mysql://localhost/cis_project";
                         String connectionUser = "root";
                         String connectionPassword = "JPN.96954899";
@@ -119,7 +117,7 @@ public class RetailStore
                         try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
                 }
             	
-            	/////////////////////////////////////////////////////////////////// JDBC STUFF
+            	/////////////////////////////////////////////////////////////////// end of JDBC STUFF
             	
             		while(rs.next(){		//go through the password table to get passwords.
             			if(password.compareTo(passwords.getString(1)) == 0)	//if the passwords are the same
@@ -144,8 +142,31 @@ public class RetailStore
         {
 		Scanner sc = new Scanner(System.in);	// Put in a menu
 		//Put in menu here
-		Statement stat1 = myCon createStatement();
-		stat1.executeUpdate("INSERT INTO User" + "VALUES("/*user_id(auto increments),user_address,user_name,user_password,user_email,user_is_staff*/ ")"
+		
+		/////////////////////////////////////////////JDBC STUFF
+		Connection conn = null;
+                Statement stat1 = null;
+                ResultSet rs = null;
+                try {
+                        Class.forName("com.mysql.jdbc.Driver").newInstance();
+                        String connectionUrl = "jdbc:mysql://localhost/cis_project";
+                        String connectionUser = "root";
+                        String connectionPassword = "JPN.96954899";
+                        conn = DriverManager.getConnection(connectionUrl, connectionUser, connectionPassword);
+                        
+                        stat1 = conn.createStatement();
+                        stat1 = executeUpdate("INSERT INTO User" + "VALUES("/*STUFF*/")")
+                        
+                } catch (Exception e) {
+                        e.printStackTrace();
+                } finally {
+                        try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+                        try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+                        try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+                }
+		/////////////////////////////////////////////END OF JDBC STUFF
+		
+	
 		System.out.println("Sucess your user ID is please relog") //*Note remember to put in the userID variable.
         }
         //////////////////////////////////////////////////////////////////////////////////////// End of menuSignUp;
@@ -166,7 +187,6 @@ public class RetailStore
         }
 
       
-
         public void menu_delete_account()
         {
 
