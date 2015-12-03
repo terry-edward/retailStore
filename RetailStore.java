@@ -52,6 +52,10 @@ public class RetailStore
                 System.out.println( "* ( 4 ) Exit                      *" );
                 System.out.println( "***********************************" );
             }
+            else if( menuOption =="1" )
+            {
+            
+            }
             else if( menuOption =="2" )
             {
             	
