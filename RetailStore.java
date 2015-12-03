@@ -94,6 +94,31 @@ public class RetailStore
             		System.out.println("Enter password: ")
             		String password = sc.nextLine();
             	
+            	/////////////////////////////////////////////////////////////////// JDBC STUFF
+            	Connection conn = null;
+                Statement stmt = null;
+                ResultSet rs = null;
+                try {
+                        //                      new com.mysql.jdbc.Driver();
+                        Class.forName("com.mysql.jdbc.Driver").newInstance();
+                       
+                        String connectionUrl = "jdbc:mysql://localhost/cis_project";
+                        String connectionUser = "root";
+                        String connectionPassword = "JPN.96954899";
+                        conn = DriverManager.getConnection(connectionUrl, connectionUser, connectionPassword);
+                        
+                        stmt = conn.createStatement();
+                        rs = stmt.executeQuery("SELECT * FROM User");
+                      
+                } catch (Exception e) {
+                        e.printStackTrace();
+                } finally {
+                        try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+                        try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+                        try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+                }
+            	
+            	/////////////////////////////////////////////////////////////////// JDBC STUFF
             		PreparedStatement password_Query = myCon.createStatement(	// the query for getting user_password based on user_name
             			"SELECT user_password, user_is_staff FROM User" + "WHERE user_name =" + user_id);
             			ResultSet passwords = password_Query.executeQuery();	
