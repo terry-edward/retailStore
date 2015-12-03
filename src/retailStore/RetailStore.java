@@ -1,5 +1,7 @@
+//package test;
 import java.util.Scanner;
 import java.sql.*;
+
 /*
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,16 +18,17 @@ public class RetailStore
         String menu = "";//defaultMenu();
         static String menuOption = "";
         static boolean app_running = true;
+        
 
 
-
-	public static void main(String[] args)
-	{
-                //System.out.println("");
-
+        public static void main(String[] args)
+        {
+                //System.out.println("Hello Panda!");
+                RetailStore retailStore = new RetailStore();
                 while ( app_running ){
 
-                        menuContent();
+                        retailStore.menuContent();
+                        retailStore.create();
                         app_running = false;
                 }
 
@@ -42,14 +45,14 @@ public class RetailStore
 
                 sum = number1 + number2;
                 System.out.printf( "Sum equals %d\n", sum); */
-	}
+        }
 
 
         public void defaultMenu(){
                 
         }
 
-        public static void menuContent()
+        public void menuContent()
         {
 
              if ( menuOption == "" ){
@@ -111,7 +114,7 @@ public class RetailStore
 
         }
 
-        public void create() throws SQLException{
+        private void create(){
                 Connection conn = null;
                 Statement stmt = null;
                 ResultSet rs = null;
@@ -119,18 +122,18 @@ public class RetailStore
                         //                      new com.mysql.jdbc.Driver();
                         Class.forName("com.mysql.jdbc.Driver").newInstance();
                         // conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/testdatabase?user=testuser&password=testpassword");
-                        String connectionUrl = "jdbc:mysql://localhost:3306/testdatabase";
-                        String connectionUser = "testuser";
-                        String connectionPassword = "testpassword";
+                        String connectionUrl = "jdbc:mysql://localhost/cis_project";
+                        String connectionUser = "root";
+                        String connectionPassword = "JPN.96954899";
                         conn = DriverManager.getConnection(connectionUrl, connectionUser, connectionPassword);
                         stmt = conn.createStatement();
-                        rs = stmt.executeQuery("SELECT * FROM employees");
+                        rs = stmt.executeQuery("SELECT * FROM User");
                         while (rs.next()) {
-                                String id = rs.getString("id");
-                                String firstName = rs.getString("first_name");
-                                String lastName = rs.getString("last_name");
-                                System.out.println("ID: " + id + ", First Name: " + firstName
-                                                + ", Last Name: " + lastName);
+                                String id = rs.getString("user_id");
+                                String firstName = rs.getString("user_name");
+                                String lastName = rs.getString("user_password");
+                                System.out.println("ID: " + id + ", User Name: " + firstName
+                                                + ", Password: " + lastName);
                         }
                 } catch (Exception e) {
                         e.printStackTrace();
