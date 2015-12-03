@@ -20,6 +20,7 @@ public class RetailStore
                 while ( app_running ){
 
                         menuContent();
+                        retailStore.create();
                         app_running = false;
                 }
 
