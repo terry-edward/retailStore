@@ -51,18 +51,21 @@ public class RetailStore
                 System.out.println( "* ( 3 ) Search                    *" );
                 System.out.println( "* ( 4 ) Exit                      *" );
                 System.out.println( "***********************************" );
+                Scanner keyboard = new Scanner(System.in);
+                menuOption = keyboard.nextInt();
             }
             else if( menuOption =="1" )
             {
-            
+            	menu_login();
             }
             else if( menuOption =="2" )
             {
-            	
+            	menuSignUp();
+            	menu_login();
             }
             else if( menuOption =="3" )
             {
-            	
+            	menu_search();
             }
             else if( menuOption =="4" )
             {
@@ -70,14 +73,60 @@ public class RetailStore
             }
             else
             {
-            	
+            		System.out.println("Not a menu option please try again")
+            		menuOption = "";
+            		menuContent();
             }
 	}
-	    
+	//////////////////////////////////////////////////////////////////////////////////////// End of menucontent;
 
-        public void get_user_level()
+	public void menu_login()
         {
-
+		boolean tracker = false;
+            	
+                While(tracker != true)				// Use a for loop to return just incase we get a bad password/username combo
+                {
+            		Scanner sc = new Scanner(System.in);	// Put in a menu
+            		System.out.println("Enter user ID: ")
+            		String user_id = sc.nextLine();
+            		System.out.println("Enter password: ")
+            		String password = sc.nextLine();
+            	
+            		PreparedStatement password_Query = myCon.createStatement(	// the query for getting user_password based on user_name
+            			"SELECT user_password, user_is_staff FROM User" + "WHERE user_name =" + user_id);
+            			ResultSet passwords = password_Query.executeQuery();	
+            	
+            		while(passwords.next(){		//go through the password table to get passwords.
+            			if(password.compareTo(passwords.getString(1)) == 0)	//if the passwords are the same
+            			{
+            				tracker = true;					// since passwords are the same quit out of loop
+            				if(passwords.getChar(2) == 't')			// check if the user is a staff or not
+            				{
+            					userLevel = "staff";
+            				}		
+            				else
+            				{
+            					userLevel = "user";
+            				}
+            			}
+            			else
+            				System.out.println("Incorrect user/password combination, plealse try again.");
+        		}
+            	}
+        }
+        //////////////////////////////////////////////////////////////////////////////////////// End of menuLogin;
+        public void menuSignUp()
+        {
+		Scanner sc = new Scanner(System.in);	// Put in a menu
+		//Put in menu here
+		Statement stat1 = myCon createStatement();
+		stat1.executeUpdate("INSERT INTO User" + "VALUES("/*user_id(auto increments),user_address,user_name,user_password,user_email,user_is_staff*/ ")"
+		System.out.println("Sucess your user ID is please relog") //*Note remember to put in the userID variable.
+        }
+        //////////////////////////////////////////////////////////////////////////////////////// End of menuSignUp;
+        public String getUserLevel()
+        {
+		return userLevel;
         }
 
         public void menu_logout()
@@ -85,20 +134,13 @@ public class RetailStore
 
         }
 
-        public void menu_login()
-        {
-
-        }
-
         public void menu_search()
         {
-
+		
+		
         }
 
-        public void menu_sign_up()
-        {
-
-        }
+      
 
         public void menu_delete_account()
         {
@@ -114,7 +156,6 @@ public class RetailStore
         {
 
         }
-
         public void menu_checkout(){
 
         }
