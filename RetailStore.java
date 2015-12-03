@@ -190,6 +190,18 @@ public class RetailStore
                         try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
                 }
     	}
+        public boolean read() throws SQLException{
+                return false;
+        }
+
+        public void update() throws SQLException{
+
+        }
+
+        public void delete() throws SQLException{
+
+        }
+
        
 
 
