@@ -105,21 +105,11 @@ public class RetailStore
                         String connectionPassword = "JPN.96954899";
                         conn = DriverManager.getConnection(connectionUrl, connectionUser, connectionPassword);
                         
-                        password_Query = conn.createStatement(	// the query for getting user_password based on user_name
+                        password_Query = conn.prepareStatement(	// the query for getting user_password based on user_name
             			"SELECT user_password, user_is_staff FROM User" + "WHERE user_name =" + user_id);
                         rs = password_Query.executeQuery();
-                      
-                } catch (Exception e) {
-                        e.printStackTrace();
-                } finally {
-                        try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
-                        try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
-                        try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
-                }
-            	
-            	/////////////////////////////////////////////////////////////////// end of JDBC STUFF
-            	
-            		while(rs.next(){		//go through the password table to get passwords.
+                        
+                        while(rs.next(){		//go through the password table to get passwords.
             			if(password.compareTo(passwords.getString(1)) == 0)	//if the passwords are the same
             			{
             				tracker = true;					// since passwords are the same quit out of loop
@@ -135,6 +125,18 @@ public class RetailStore
             			else
             				System.out.println("Incorrect user/password combination, plealse try again.");
         		}
+                      
+                } catch (Exception e) {
+                        e.printStackTrace();
+                } finally {
+                        try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+                        try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+                        try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+                }
+            	
+            	/////////////////////////////////////////////////////////////////// end of JDBC STUFF
+            	
+            		
             	}
         }
         //////////////////////////////////////////////////////////////////////////////////////// End of menuLogin;
@@ -145,7 +147,7 @@ public class RetailStore
 		
 		/////////////////////////////////////////////JDBC STUFF
 		Connection conn = null;
-                Statement stat1 = null;
+                PreparedStatement signup = null;
                 ResultSet rs = null;
                 try {
                         Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -154,8 +156,8 @@ public class RetailStore
                         String connectionPassword = "JPN.96954899";
                         conn = DriverManager.getConnection(connectionUrl, connectionUser, connectionPassword);
                         
-                        stat1 = conn.createStatement();
-                        stat1 = executeUpdate("INSERT INTO User" + "VALUES("/*STUFF*/")")
+                        signup = conn.prepareStatement("INSERT INTO User" + "VALUES("/*STUFF*/")");
+
                         
                 } catch (Exception e) {
                         e.printStackTrace();
@@ -167,7 +169,7 @@ public class RetailStore
 		/////////////////////////////////////////////END OF JDBC STUFF
 		
 	
-		System.out.println("Sucess your user ID is please relog") //*Note remember to put in the userID variable.
+		System.out.println("You have successfully signed up, your user ID is:" +/*whataver variable*/ + " please log in") //*Note remember to put in the userID variable.
         }
         //////////////////////////////////////////////////////////////////////////////////////// End of menuSignUp;
         public String getUserLevel()
@@ -183,13 +185,34 @@ public class RetailStore
         public void menu_search()
         {
 		
-		
         }
 
       
         public void menu_delete_account()
         {
-
+        	/////////////////////////////////////////////JDBC STUFF
+		Connection conn = null;
+                Statement deleteAccount = null;
+                ResultSet rs = null;
+                try {
+                        Class.forName("com.mysql.jdbc.Driver").newInstance();
+                        String connectionUrl = "jdbc:mysql://localhost/cis_project";
+                        String connectionUser = "root";
+                        String connectionPassword = "JPN.96954899";
+                        conn = DriverManager.getConnection(connectionUrl, connectionUser, connectionPassword);
+                        
+                        deleteAccount = conn.createStatement();
+                        String sql = "DELETE FROM User " + "WHERE user_id = " + /*whatever it is called*/;
+                        deleteAccount.executeUpdate(sql)
+                        
+                } catch (Exception e) {
+                        e.printStackTrace();
+                } finally {
+                        try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+                        try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+                        try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+                }	
+                /////////////////////////////////////////////JDBC STUFF
         }
 
         public void menu_update_user_info()
