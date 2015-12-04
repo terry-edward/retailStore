@@ -1,38 +1,5 @@
 //package test;
-import java.util.Scanner;
-import java.sql.*;
-
-/*
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-*/
-
-public class RetailStore
-{
-
-        String userLevel = "Guest";
-        String[] userinfo = new String[]{""};
-        String menu = "";//defaultMenu();
-        static String menuOption = "";
-        static boolean app_running = true;
-        
-
-
-        public static void main(String[] args)
-        {
-                //System.out.println("Hello Panda!");
-                RetailStore retailStore = new RetailStore();
-                while ( app_running ){
-
-                        retailStore.menuContent();
-                        retailStore.create();
-                        app_running = false;
-                }
-
-               /* Scanner input = new Scanner( System.in );
+ /* Scanner input = new Scanner( System.in );
 
                 int number1;
                 int number2;
@@ -45,43 +12,107 @@ public class RetailStore
 
                 sum = number1 + number2;
                 System.out.printf( "Sum equals %d\n", sum); */
-        }
+//String userLevel = "Guest";
+                //boolean logged_in = false;
+    //String username = "Guest";
+    //String password = "Guest";
+import java.util.Scanner;
+import java.sql.*;
+
+public class RetailStore
+{
+
+    
+    String[] userinfo = new String[]{""};
+    
+    String[] guest_general_options = new String[]{
+        "Login", "SignUp", "Search", "Exit"
+    };
 
 
-        public void defaultMenu(){
-                
-        }
 
-        public void menuContent()
+
+
+    String[] login_options = new String[]{"Username", "Password", "Enter Credentials", "Return"};
+    String[] user_option = new String[]{"Delete Account", "Update Info", "Add to Order", "View Cart", "Logout", "Checkout", "Search"};
+    String[] staff_option = new String[]{"Create", "Update", "Delete"};
+    boolean app_running = true;
+    String username = "Guest";
+    String password = "Guest";
+    
+
+
+        public static void main(String[] args)
         {
 
-             if ( menuOption == "" ){
-                System.out.println( "***********************************" );
-                System.out.println( "* ( 1 ) Login                     *" );
-                System.out.println( "* ( 2 ) Sign Up                   *" );
-                System.out.println( "* ( 3 ) Search                    *" );
-                System.out.println( "* ( 4 ) Exit                      *" );
-                System.out.println( "***********************************" );
-            }else{
+            RetailStore retailStore = new RetailStore();
+            //retailStore.options = retailStore.guest_general_options;
+           // while ( retailStore.app_running )
+            //{
+                    retailStore.menuContent(retailStore.guest_general_options);
+            //}          
+        }
 
+
+        public void menuContent(String[] menuOptions)
+        {
+
+            while ( app_running ){
+            String menu = "";
+            int size = menuOptions.length;
+            for (int i = 0; i < size; i++){
+                menu += "( " + i + " ) " + menuOptions[i] + "\n";
             }
 
+            System.out.print(menu);
+            //Scanner input = new Scanner( System.in );
+            Scanner input = new Scanner( System.in );
+            int menuOption = input.nextInt(); 
+            //System.out.println(options[menuOption]);
+            navigate(menuOptions[menuOption]);
+            }
+        }
 
+
+
+        public void navigate(String menuOption){
+            
+            switch (menuOption){
+
+
+            case "Exit":
+                menu_exit();
+                break;
+            case "Login":
+                menu_login();
+                //menuContent(login_options);
+                //System.out.println("menuOption");
+            case "Return":
+                return;
+            case "Username":
+                //set_Username();
+            default:
+                //menu_exit();
+                System.out.println(menuOption);
+            }
 
         }
 
-        public void get_user_level()
+        /* EXIT APP */
+        public void menu_exit()
         {
-
-        }
-
-        public void menu_logout()
-        {
-
+            app_running = false;
         }
 
         public void menu_login()
         {
+
+            Scanner input = new Scanner( System.in );
+            System.out.print( "Please Enter Username:" );
+            username = input.nextLine(); //Defines number1 
+            System.out.print( "Please Enter Password:" );
+            password = input.nextLine(); //Defines number1 
+            
 
         }
 
