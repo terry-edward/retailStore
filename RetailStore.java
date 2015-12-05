@@ -246,6 +246,7 @@ public class RetailStore
                         while(rs.next()){		//go through the result table to get passwords.
             			if(password.compareTo(rs.getString(1)) == 0)	//if the passwords are the same
             			{
+            				System.println("Login Successful");
             				tracker = true;					// since passwords are the same quit out of loop
             				if(rs.getChar(2) == 't')			// check if the user is a staff or not
             				{
