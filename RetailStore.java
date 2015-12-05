@@ -84,60 +84,7 @@ public class RetailStore
 
 	public void menu_login()
         {
-		boolean tracker = false;
-            	
-                While(tracker != true)				// Use a for loop to return just incase we get a bad password/username combo
-                {
-            		Scanner sc = new Scanner(System.in);	// Put in a menu
-            		System.out.println("Enter user ID: ")
-            		String user_id = sc.nextLine();
-            		System.out.println("Enter password: ")
-            		String password = sc.nextLine();
-            	
-            	/////////////////////////////////////////////////////////////////// JDBC STUFF
-            	Connection conn = null;
-                PreparedStatement password_Query = null;
-                ResultSet rs = null;
-                try {
-                        Class.forName("com.mysql.jdbc.Driver").newInstance();
-                        String connectionUrl = "jdbc:mysql://localhost/cis_project";
-                        String connectionUser = "root";
-                        String connectionPassword = "JPN.96954899";
-                        conn = DriverManager.getConnection(connectionUrl, connectionUser, connectionPassword);
-                        
-                        password_Query = conn.prepareStatement(	// the query for getting user_password based on user_name
-            			"SELECT user_password, user_is_staff FROM User" + "WHERE user_name =" + user_id);
-                        rs = password_Query.executeQuery();
-                        
-                        while(rs.next(){		//go through the password table to get passwords.
-            			if(password.compareTo(passwords.getString(1)) == 0)	//if the passwords are the same
-            			{
-            				tracker = true;					// since passwords are the same quit out of loop
-            				if(passwords.getChar(2) == 't')			// check if the user is a staff or not
-            				{
-            					userLevel = "staff";
-            				}		
-            				else
-            				{
-            					userLevel = "user";
-            				}
-            			}
-            			else
-            				System.out.println("Incorrect user/password combination, plealse try again.");
-        		}
-                      
-                } catch (Exception e) {
-                        e.printStackTrace();
-                } finally {
-                        try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
-                        try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
-                        try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
-                }
-            	
-            	/////////////////////////////////////////////////////////////////// end of JDBC STUFF
-            	
-            		
-            	}
+		
         }
         //////////////////////////////////////////////////////////////////////////////////////// End of menuLogin;
         public void menuSignUp()
@@ -268,8 +215,63 @@ public class RetailStore
         public void delete() throws SQLException{
 
         }
-
-       
-
-
+	//*********************************************************************************************************************************
+       public void login() 
+       {
+	boolean tracker = false;
+            	
+                While(tracker != true)				// Use a for loop to return just incase we get a bad password/username combo
+                {
+            		Scanner sc = new Scanner(System.in);	// Put in a menu
+            		System.out.println("Enter user ID: ")
+            		String user_id = sc.nextLine();
+            		System.out.println("Enter password: ")
+            		String password = sc.nextLine();
+            	
+            	/////////////////////////////////////////////////////////////////// JDBC STUFF
+            	Connection conn = null;
+                PreparedStatement password_Query = null;
+                ResultSet rs = null;
+                try {
+                        Class.forName("com.mysql.jdbc.Driver").newInstance();
+                        String connectionUrl = "jdbc:mysql://localhost/cis_project";
+                        String connectionUser = "root";
+                        String connectionPassword = "JPN.96954899";
+                        conn = DriverManager.getConnection(connectionUrl, connectionUser, connectionPassword);
+                        
+                        password_Query = conn.prepareStatement(	// the query for getting user_password based on user_name
+            			"SELECT user_password, user_is_staff FROM User" + "WHERE user_name =" + user_id);
+                        rs = password_Query.executeQuery();
+                        
+                        while(rs.next(){		//go through the result table to get passwords.
+            			if(password.compareTo(rs.getString(1)) == 0)	//if the passwords are the same
+            			{
+            				tracker = true;					// since passwords are the same quit out of loop
+            				if(rs.getChar(2) == 't')			// check if the user is a staff or not
+            				{
+            					userLevel = "staff";
+            				}		
+            				else
+            				{
+            					userLevel = "user";
+            				}
+            			}
+            			else
+            				System.out.println("Incorrect user/password combination, plealse try again.");
+        		}
+                      
+                } catch (Exception e) {
+                        e.printStackTrace();
+                } finally {
+                        try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+                        try { if (password_query != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+                        try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+                }
+            	
+            	/////////////////////////////////////////////////////////////////// end of JDBC STUFF
+            	
+            		
+            	}
+       }
+       	//*********************************************************************************************************************************
 }
