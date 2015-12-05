@@ -240,7 +240,7 @@ public class RetailStore
                         conn = DriverManager.getConnection(connectionUrl, connectionUser, connectionPassword);
                         
                         password_Query = conn.prepareStatement(	// the query for getting user_password based on user_name
-            			"SELECT user_password, user_is_staff FROM User" + "WHERE user_name =" + user_id);
+            			"SELECT user_password, user_is_staff FROM User" + "WHERE user_id =" + user_id);
                         rs = password_Query.executeQuery();
                         
                         while(rs.next(){		//go through the result table to get passwords.
