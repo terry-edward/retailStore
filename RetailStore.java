@@ -243,7 +243,7 @@ public class RetailStore
             			"SELECT user_password, user_is_staff FROM User" + "WHERE user_id =" + user_id);
                         rs = password_Query.executeQuery();
                         
-                        while(rs.next(){		//go through the result table to get passwords.
+                        while(rs.next()){		//go through the result table to get passwords.
             			if(password.compareTo(rs.getString(1)) == 0)	//if the passwords are the same
             			{
             				tracker = true;					// since passwords are the same quit out of loop
